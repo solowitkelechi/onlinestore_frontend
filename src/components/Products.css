@@ -1,0 +1,16 @@
+
+
+.container{
+    display: flex;
+    width: 100%;
+    flex-flow: row nowrap;
+    gap: 1em;
+    justify-content: center safe;
+    margin: 0 auto;
+    overflow-x: scroll;
+    padding: 1em;
+}
+
+.container::-webkit-scrollbar{
+    display: none;
+}

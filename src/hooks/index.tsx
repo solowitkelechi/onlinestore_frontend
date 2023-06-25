@@ -1,0 +1,1 @@
+export {useSmartContract} from "./useSmartContract"
