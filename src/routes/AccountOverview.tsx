@@ -53,7 +53,6 @@ const categories = ProductCategories()
 export default function AccountOverview(){
     const [,,, token,] = useOutletContext() as any
     const [value, setValue] = useState("1")
-    console.log(token)
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue)
@@ -69,6 +68,9 @@ export default function AccountOverview(){
     const classes = useStyles()
 
     const [addProgress, setAddProgress] = useState<boolean>(false)
+    const [addProductError, setAddProductError] = useState<boolean>(false)
+    const [addProductImageError, setAddProductImageError] = useState<boolean>(false)
+
     const [imageError, setImageError] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
     const [updateEthAddressAlert, setUpdateEthAddressAlert] = useState<boolean>(false)
@@ -78,6 +80,10 @@ export default function AccountOverview(){
 
     const handleSubmit= async (event: React.FormEvent<HTMLFormElement>)=>{
         event.preventDefault()
+        // pId variable for storing the product id
+        // also to be used to delete the product if
+        // other api calls failed so it won't be saved in the DB.
+        let pId:Number
         if (!token.eth_address){
             setEthAddressError(true)
             setTimeout(()=>{
@@ -98,6 +104,9 @@ export default function AccountOverview(){
                 seller_eth_address: token.eth_address,
             }
         ).then(async (response) => {
+            // here, the pId is saved just incase any of the following API calls fails
+            // the above product added will be deleted.
+            pId = response.data.id
             await axios.post(`${url}/api/productdetails/`,{
                 product: response.data.id,
                 gender: productData.gender,
@@ -119,24 +128,43 @@ export default function AccountOverview(){
                         'Content-Type': 'multipart/form-data'
                     }
                 }
-                ).then((response) => {
+                ).then(() => {
                     setAddProgress(false)
                     setSuccess(true)
                     setTimeout(()=>{
                         setSuccess(false)
                     }, 5000)
                 }).catch((error)=>{
-                    console.log(error)
-                    setAddProgress(false)
+                    axios.delete(`${url}/api/products/${pId}/`)
+                    .then(() => {
+                        setAddProgress(false)
+                        setAddProductImageError(true)
+                        // shows error alert if failed
+                        setTimeout(()=>{
+                            setAddProductImageError(false)
+                        },5000)
+                    })
                 })
-            }).catch((error)=> {
-                setAddProgress(false)
-                console.log(error)
+            }).catch(()=> {
+                // if failed to add details to products then
+                // delete the add product.
+                axios.delete(`${url}/api/products/${response.data.id}/`)
+                .then(() => {
+                    setAddProgress(false)
+                    setAddProductError(true)
+                    // shows error alert if failed
+                    setTimeout(()=>{
+                        setAddProductError(false)
+                    },5000)
+                })
             })
-            
         }).catch((error) => {
             setAddProgress(false)
-            console.log('outer error', error)
+            setAddProductError(true)
+            // shows error alert if failed
+            setTimeout(()=>{
+                setAddProductError(false)
+            }, 5000)
         })
     }
 
@@ -368,10 +396,8 @@ export default function AccountOverview(){
                     </TextField>
                     <div className={classes.row}>
                         {
-                            Object.keys(details).length > 0 ?
+                            Object.keys(details).length > 0 &&
                             details.details.map((value:any) => (<TextField label={value} key={value} name={value} onChange={handleInputChange} variant='standard'/> ))
-                            : 
-                            null
                         }
                     </div>
                     <TextField label='product name' onChange={handleInputChange} name="productname" required variant='standard'/>
@@ -385,21 +411,27 @@ export default function AccountOverview(){
                         <Button variant="contained" component="span">Add Image</Button>
                         <span>max image size: 600kb. File type: jpg, png, jpeg</span>
                     </label>
-                    
-                    {
-                        imageError && <Alert severity="warning">Image size should be less than 600kb</Alert>
-                    }
-                    {
-                        imageTypeError && <Alert severity="warning">Image type should be either jpeg, jpg, or png.</Alert>
-
-                    }
-                    <Button type='submit' variant="contained" color="primary">{addProgress ? <CircularProgress /> : 'Add'}</Button>
-                    {
-                        success && <Alert severity="success">Product added successfully</Alert>
-                    }
-                    {
-                        ethAddressError && <Alert severity="error">ETH address required, Update your ETH address!</Alert>
-                    }
+                    <section>
+                        {
+                            addProductError && <Alert severity="error">Failed to add product, try again!</Alert>
+                        }
+                        {
+                            addProductImageError && <Alert severity="error">Image upload failed, try again!</Alert>
+                        }
+                        {
+                            imageError && <Alert severity="warning">Image size should be less than 600kb</Alert>
+                        }
+                        {
+                            imageTypeError && <Alert severity="warning">Image type should be either jpeg, jpg, or png.</Alert>
+                        }
+                        <Button type='submit' variant="contained" disabled={addProgress} color="primary">{addProgress ? <CircularProgress /> : 'Add'}</Button>
+                        {
+                            success && <Alert severity="success">Product added successfully</Alert>
+                        }
+                        {
+                            ethAddressError && <Alert severity="error">ETH address required, Update your ETH address!</Alert>
+                        }
+                    </section>
                 </form>
             </div>
         </Modal>

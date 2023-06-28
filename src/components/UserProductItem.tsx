@@ -17,7 +17,6 @@ export default function UserProductItem({item}: any){
                 <p>{item.name}</p>
                 <p>{item.brand}</p>
                 <b>${item.price}</b>
-                <pre>order: {item.id}</pre>
             </Box>
         </Card>
     )

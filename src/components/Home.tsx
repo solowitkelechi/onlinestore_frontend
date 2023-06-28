@@ -41,7 +41,7 @@ function Main (){
                     )
                 }
             </section>
-            <h2>Random products</h2>
+            <h2>products you may like</h2>
             <Products/>
         </div>
     )
