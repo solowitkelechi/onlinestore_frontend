@@ -11,6 +11,8 @@ import axios from 'axios'
 export const useSmartContract = () => {
     // check {chainId}
 
+    const url = "https://solowitkelechi.pythonanywhere.com"
+
     const chainIdMap: any = {
         "11155111": "sepolia",
         "59140": "linea",
@@ -62,13 +64,12 @@ export const useSmartContract = () => {
 
     const updateOrder = async (id: number, saleQuantity: number, userid: number) => {
         // update user's order history
-        console.log("updating orderhistory")
-        await axios.post("http://127.0.0.1:8000/api/orderhistory/",{
+        await axios.post(`${url}/api/orderhistory/`,{
             buyer_name: userid,
             product: id,
         }).then(async (response) => {
             // update product quantity
-            await axios.patch(`http://127.0.0.1:8000/api/products/${id}/`, {
+            await axios.patch(`${url}/api/products/${id}/`, {
             quantity: saleQuantity,
         }).then(response => console.log("all databases updated")).catch(error => console.log(error))
         }).catch(error => console.log(error))

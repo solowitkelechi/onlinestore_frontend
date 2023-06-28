@@ -1,8 +1,7 @@
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
-import CardContent from '@mui/material/CardContent'
 import Box from '@mui/material/Box'
-import {useProduct, useImage} from '../hooks/getData'
+import {useImage} from '../hooks/getData'
 
 export default function UserProductItem({item}: any){
     const {productImage} = useImage(item.id)

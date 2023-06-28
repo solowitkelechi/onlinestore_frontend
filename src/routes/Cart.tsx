@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import {makeStyles} from '@mui/styles'
 import Button from '@mui/material/Button'
 import CartItem from '../components/CartItem'
@@ -5,6 +6,7 @@ import './Cart.css'
 import {NavLink} from 'react-router-dom'
 import { useOutletContext } from 'react-router-dom'
 import {CartSummary} from '../components/CartSummary'
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 
 const useStyles = makeStyles(() => ({
@@ -51,28 +53,42 @@ const useStyles = makeStyles(() => ({
 
 function Cart(){
     const classes = useStyles()
+
+    const [saleSuccess, setSaleSuccess] = useState<boolean>(false)
+
     const [cartToken, setCartToken, removeCartToken]: any = useOutletContext()
-    return cartToken.length === 0 ?
-    (
-        <div className={classes.noItem}>
-            <h2>No item in cart</h2>
-            <NavLink to="/" className='link'><Button variant="contained">View Collections</Button></NavLink>
-        </div>
-    )
-    :
-    (
-        <div className={classes.cartContainer}>
-            <div className={classes.cartItems}>
-                <h3>Cart Items ({cartToken.length})</h3>
-                {  
-                    cartToken.length > 0 
-                    &&
-                    cartToken.map((item: any) => <CartItem key={item.id} item={item} setCartToken={setCartToken} removeCartToken={removeCartToken} />)
-                }
+
+    return saleSuccess ? 
+        (
+            <div className={classes.noItem}>
+                <h2><DoneAllIcon /></h2>
+                <h3>Order confirmed</h3>
+                <NavLink to="/" className='link'><Button variant="contained">View Collections</Button></NavLink>
             </div>
-            <CartSummary cartToken={cartToken} />
-        </div>
-    )
+        )
+        :
+        cartToken.length === 0 ?
+        (
+            <div className={classes.noItem}>
+                <h2>No item in cart</h2>
+                <NavLink to="/" className='link'><Button variant="contained">View Collections</Button></NavLink>
+            </div>
+        )
+        :
+        (
+            <div className={classes.cartContainer}>
+                <div className={classes.cartItems}>
+                    <h3>Cart Items ({cartToken.length})</h3>
+                    {  
+                        cartToken.length > 0 
+                        &&
+                        cartToken.map((item: any) => <CartItem key={item.id} item={item} setCartToken={setCartToken} removeCartToken={removeCartToken} />)
+                    }
+                </div>
+                <CartSummary cartToken={cartToken} setSaleState={setSaleSuccess}/>
+            </div>
+        )
+    
 }
 
 export default Cart

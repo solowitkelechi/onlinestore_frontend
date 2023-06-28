@@ -2,8 +2,9 @@ import useSWR from 'swr'
 import axios from 'axios'
 
 export function useUser(id:any){
-    const fetcher = (url: string) => axios.get(url).then(res => res.data)
+    const url = "https://solowitkelechi.pythonanywhere.com"
 
+    const fetcher = (url: string) => axios.get(url).then(res => res.data)
     const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/api/users/${id}/`, fetcher)
     return {
         user: data,
@@ -13,8 +14,10 @@ export function useUser(id:any){
 }
 
 export function useAllProducts(){
+    const url = "https://solowitkelechi.pythonanywhere.com"
+
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/api/products/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/api/products/`, fetcher)
     
     return {
         allProducts: data,
@@ -24,8 +27,10 @@ export function useAllProducts(){
 }
 
 export function useRandomProducts(){
+    const url = "https://solowitkelechi.pythonanywhere.com"
+
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/randomproducts/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/randomproducts/`, fetcher)
     
     return {
         randomProducts: data,
@@ -35,8 +40,10 @@ export function useRandomProducts(){
 }
 
 export function useAllOrder(){
+    const url = "https://solowitkelechi.pythonanywhere.com"
+
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/api/orderhistory/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/api/orderhistory/`, fetcher)
     
     return {
         allOrder: data,
@@ -46,9 +53,11 @@ export function useAllOrder(){
 }
 
 export function useProduct(id:any){
+    const url = "https://solowitkelechi.pythonanywhere.com"
+
     const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/api/products/${id}/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/api/products/${id}/`, fetcher)
     return {
         product: data,
         isLoading,
@@ -57,9 +66,11 @@ export function useProduct(id:any){
 }
 
 export function useProductsForPrice(){
+    const url = "https://solowitkelechi.pythonanywhere.com"
+
     const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/api/products/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/api/products/`, fetcher)
     return {
         products: data,
         isLoading,
@@ -68,9 +79,10 @@ export function useProductsForPrice(){
 }
 
 export function useProductCategory(category:any){
+    const url = "https://solowitkelechi.pythonanywhere.com"
     const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/productbycategory/${category}/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/productbycategory/${category}/`, fetcher)
     return {
         productItems: data,
         isLoading,
@@ -79,8 +91,10 @@ export function useProductCategory(category:any){
 }
 
 export function useImage(id:any){
+    const url = "https://solowitkelechi.pythonanywhere.com"
+
     const fetcher = (url: string) => axios.get(url).then(response => response.data)
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/image/${id}/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/image/${id}/`, fetcher)
     return {
         productImage: data,
         isLoading,
@@ -89,8 +103,9 @@ export function useImage(id:any){
 }
 
 export function useProductDetail(id:any){
+    const url = "https://solowitkelechi.pythonanywhere.com"
     const fetcher = (url: string) => axios.get(url).then(response => response.data)
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/productdetail/get/${id}/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/productdetail/get/${id}/`, fetcher)
     return {
         productDetail: data,
         isLoading,

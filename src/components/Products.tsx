@@ -1,4 +1,3 @@
-import React from 'react';
 import ProductItem from './ProductItem'
 import './Products.css'
 import {useRandomProducts} from "../hooks/getData"

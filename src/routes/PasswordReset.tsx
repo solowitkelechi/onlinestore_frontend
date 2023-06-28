@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import {Button, Container, TextField, Alert} from '@mui/material'
@@ -40,12 +40,12 @@ const PasswordReset = () => {
         key: '',
         user: 0,
     })
-    const url = "http://127.0.0.1:8000"
+    const url = "https://solowitkelechi.pythonanywhere.com"
 
     const classes = useStyles()
 
     const checkKeyExpiration = useCallback(async () => {
-        await axios.post(url + '/passwordrecovery/', {
+        await axios.post(`${url}/passwordrecovery/`, {
             key: slug,
         })
         .then((response) => {
@@ -100,7 +100,7 @@ const PasswordReset = () => {
             return
         }
         if (keydetail.user !== undefined){
-            await axios.patch(url+`/api/users/${keydetail.user}/`,{
+            await axios.patch(`${url}/api/users/${keydetail.user}/`,{
                 password: password,
             },{
                 timeout: 10000,

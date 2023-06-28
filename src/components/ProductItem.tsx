@@ -1,6 +1,4 @@
-import React from 'react'
 import './ProductItem.css'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {useImage} from '../hooks/getData'
 
 function ProductItem(props: any){

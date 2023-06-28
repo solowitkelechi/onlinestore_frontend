@@ -11,7 +11,7 @@ import {Navigate, useOutletContext} from 'react-router-dom'
 
 
 export default function Account(){
-    const [cartToken, setCartToken, removeCartToken, token, setToken] = useOutletContext() as any
+    const [,,,, setToken] = useOutletContext() as any
     const loginRef = useRef<HTMLDivElement>(null)
     const registerRef = useRef<HTMLDivElement>(null)
     const [email, setEmail] = useState<string>("")
@@ -36,7 +36,7 @@ export default function Account(){
     const [reverted, setReverted] = useState<boolean>(false)
     const [requestTimeoutError, setRequestTimeoutError] = useState<boolean>(false)
 
-    const url = 'http://127.0.0.1:8000'
+    const url = "https://solowitkelechi.pythonanywhere.com"
 
     const hideForm= () => {
         setEmail("")
@@ -217,7 +217,7 @@ export default function Account(){
                                     <p>
                                         <a 
                                             style="text-decoration: none; padding: 5px; background-color: #3b4c82;border-radius: 3px; color: whitesmoke" 
-                                            href="http://127.0.0.1:3000/password-reset/${recoveryData.key}">
+                                            href="https://onlinestore-frontend.vercel.app/password-reset/${recoveryData.key}">
                                             click to reset password
                                         </a>
                                     </p>

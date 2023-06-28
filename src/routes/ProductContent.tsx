@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import {makeStyles} from '@mui/styles'
 import './ProductContent.css'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -8,6 +8,7 @@ import ProductItem from '../components/ProductItem';
 import {useParams, useOutletContext} from 'react-router-dom'
 import {useProduct,useRandomProducts, useImage, useUser} from '../hooks/getData'
 import { RemoveShoppingCart } from '@mui/icons-material';
+import CircularProgress from '@mui/material/CircularProgress'
 
 const useStyles = makeStyles(() => ({
     btmContainer: {
@@ -106,13 +107,20 @@ function ProductContent(){
             <section className="item hero">
                 <img src={productImage?.image_url} alt="" />
             </section>
-            <section className="item content">
-                <b>{product?.name}</b>
-                <b>${product?.price}</b>
-                <p>{product?.description}
-                </p>
-                <span>{user?.username}</span>
-            </section>
+            {
+                isLoading ? 
+                <section className="item content">
+                    <CircularProgress size={26}/>
+                </section>
+                :
+                <section className="item content">
+                    <b>{product?.name}</b>
+                    <b>${product?.price}</b>
+                    <p>{product?.description}
+                    </p>
+                    <span>{user?.username}</span>
+                </section>
+            }
             <section className="item cart">
                 <div>
                     <Button variant="outlined" disabled={itemCount <= 1 && true} onClick={handleDecrement}>-</Button>
@@ -125,13 +133,11 @@ function ProductContent(){
                 }
             </section>
         </div>
-        <h2>related products</h2>
+        <h2>other products</h2>
         <div className={classes.btmContainer}>
-            {
-                randomProducts?.length > 0 ?
+            {   isLoadingRandom ? <CircularProgress size={26}/> :
+                randomProducts?.length > 0 &&
                 randomProducts.map((item:any) => (<ProductItem key={item.id} item={item} scrollable={true}/>))
-                :
-                null
             }
         </div>
         </>

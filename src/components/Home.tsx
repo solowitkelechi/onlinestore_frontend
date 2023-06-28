@@ -1,5 +1,3 @@
-import React from 'react';
-import Sidebar from './Sidebar'
 import './Home.css'
 import coverimage from '../images/shopping-cover.jpg'
 import delivery from '../images/delivery.jpg'

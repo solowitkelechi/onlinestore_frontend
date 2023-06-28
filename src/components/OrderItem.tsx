@@ -20,7 +20,7 @@ export default function OrderItem({item}: any){
                 <p>{product?.brand}</p>
                 <b>${product?.price}</b>
                 <i>{item.delivered ? "delivered" : "pending"}</i>
-                <pre>order: {item.id}</pre>
+                <pre>order id: {item.id}</pre>
             </Box>
         </Card>
     )

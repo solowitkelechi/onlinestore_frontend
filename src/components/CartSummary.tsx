@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 
-export function CartSummary({cartToken}: any){
+export function CartSummary({cartToken, setSaleState}: any){
     const [,,,token,]: any = useOutletContext()
     const classes = useStyles()
     const [totalCost, setTotalCost] = useState("0") // to show the items total cost
@@ -75,6 +75,12 @@ export function CartSummary({cartToken}: any){
         handleCost()
     },[etherprice, handleCost, totalCost])
 
+    useEffect(()=>{
+        if (transactionState.status === "Success"){
+            setSaleState(true)
+        }
+    }, [transactionState.status])
+
     // handle payment on checkout
     const handleCheckout = () => {
         //const cost = etherprice ? totalCost / parseInt(etherprice) : 0
@@ -106,12 +112,9 @@ export function CartSummary({cartToken}: any){
                 <li><b>{totalCost} ETH</b></li>
                 <li><Button variant='contained' disabled={isMining} onClick={handleCheckout}>{isMining ? <CircularProgress/> : "Checkout"}</Button></li>
             </ul>
+            
             {
-                // check if transaction is successful
-                paymentSuccessful && <Alert severity='success'>Checkout successful</Alert>
-            }
-            {
-                // check if transaction is successful
+                // check if transaction failed
                 paymentFailed && <Alert severity='error'>Checkout failed, try again.</Alert>
             }
             {

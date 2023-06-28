@@ -1,9 +1,9 @@
 import {useParams} from 'react-router-dom'
 import ProductItem from '../components/ProductItem'
-import { useProductCategory } from '../hooks/getData'
 import {makeStyles} from '@mui/styles'
 import React, {useState, useEffect, useCallback} from 'react'
 import Pagination from '@mui/material/Pagination'
+import CircularProgress from '@mui/material/CircularProgress'
 import axios from 'axios'
 
 const useStyles = makeStyles(() => ({
@@ -31,6 +31,8 @@ export default function Category(){
         results: Array<{}>
     }
 
+    const [isLoadingProducts, setIsLoadingProducts] = useState<boolean>(false);
+
     const [items, setItems] = useState({
         count: 0,
         next: '',
@@ -38,7 +40,7 @@ export default function Category(){
         results: []
     })
     const [page, setPage] = useState(1)
-    const url = `http://127.0.0.1:8000/productbycategory/${slug}/`
+    const url = `https://solowitkelechi.pythonanywhere.com/productbycategory/${slug}/`
     const classes = useStyles()
 
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -46,9 +48,10 @@ export default function Category(){
     }
 
     const getPageItems = useCallback(async () => {
+        setIsLoadingProducts(true)
         await axios.get(url+`?page=${page}`).then((response)=>{
             setItems(response.data)
-            
+            setIsLoadingProducts(false)
         })
     }, [page, url])
 
@@ -61,9 +64,9 @@ export default function Category(){
         <div className={classes.categoryContainer}>
             <div className={classes.itemsContainer}>
                 {
-                    items.results?.length > 0 ?
-                    items?.results?.map((item: any) => <ProductItem key={item.id} item={item} />) :
-                    null
+                    isLoadingProducts ? <CircularProgress size={26} /> :
+                    items.results?.length > 0 &&
+                    items?.results?.map((item: any) => <ProductItem key={item.id} item={item} />)
                 }
             </div>
             {

@@ -1,11 +1,9 @@
-import {useEthers, useEtherBalance} from '@usedapp/core'
+import {useEthers} from '@usedapp/core'
 import Button from '@mui/material/Button'
 import {useEffect, useState} from 'react'
-import {formatEther} from '@ethersproject/units'
 
 const WalletConnect = ({config}: any) => {
     const {account, activateBrowserWallet, chainId, deactivate} = useEthers()
-    const walletBalance = useEtherBalance(account)
     const isConnected = account !== undefined
     const [id, setId] = useState(0)
 

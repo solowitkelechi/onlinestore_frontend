@@ -1,5 +1,5 @@
 import './AccountOverview.css'
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect} from 'react'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
@@ -59,7 +59,7 @@ export default function AccountOverview(){
         setValue(newValue)
     }
 
-    const url = "http://127.0.0.1:8000"
+    const url = "https://solowitkelechi.pythonanywhere.com"
 
     const {allProducts, isLoading, isError} = useAllProducts()
     const {allOrder, isLoadingOrder, isErrorOrder} = useAllOrder()
@@ -86,7 +86,7 @@ export default function AccountOverview(){
             return
         }
         setAddProgress(true)
-        await axios.post('http://127.0.0.1:8000/api/products/',
+        await axios.post(`${url}/api/products/`,
             {
                 seller_name: token.id,
                 name: productData.productname,
@@ -98,7 +98,7 @@ export default function AccountOverview(){
                 seller_eth_address: token.eth_address,
             }
         ).then(async (response) => {
-            await axios.post('http://127.0.0.1:8000/api/productdetails/',{
+            await axios.post(`${url}/api/productdetails/`,{
                 product: response.data.id,
                 gender: productData.gender,
                 size: productData.size,
@@ -111,7 +111,7 @@ export default function AccountOverview(){
                 graphic_card: productData.graphic_card,
                 battery_cell: productData.battery_cell,
             }).then(async (response) => {
-                await axios.post('http://127.0.0.1:8000/image/upload/',{
+                await axios.post(`${url}/image/upload/`,{
                     product: response.data.product,
                     image: image
                 },{
@@ -273,7 +273,7 @@ export default function AccountOverview(){
             }, 3000)
             return
         }
-        await axios.patch(`http://127.0.0.1:8000/api/users/${token.id}/`, {
+        await axios.patch(`${url}/api/users/${token.id}/`, {
             eth_address: ethAddress,
         }).then((response) => {
             setUpdatingEthAddress(false)
