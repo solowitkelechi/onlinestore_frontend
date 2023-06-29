@@ -135,6 +135,7 @@ export default function AccountOverview(){
                         setSuccess(false)
                     }, 5000)
                 }).catch((error)=>{
+                    console.log("error adding image to product")
                     axios.delete(`${url}/api/products/${pId}/`)
                     .then(() => {
                         setAddProgress(false)
@@ -148,6 +149,7 @@ export default function AccountOverview(){
             }).catch(()=> {
                 // if failed to add details to products then
                 // delete the add product.
+                console.log('error adding product details')
                 axios.delete(`${url}/api/products/${response.data.id}/`)
                 .then(() => {
                     setAddProgress(false)
@@ -159,6 +161,7 @@ export default function AccountOverview(){
                 })
             })
         }).catch((error) => {
+            console.log("error adding first product")
             setAddProgress(false)
             setAddProductError(true)
             // shows error alert if failed
