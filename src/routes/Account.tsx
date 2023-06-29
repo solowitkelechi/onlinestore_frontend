@@ -36,7 +36,7 @@ export default function Account(){
     const [reverted, setReverted] = useState<boolean>(false)
     const [requestTimeoutError, setRequestTimeoutError] = useState<boolean>(false)
 
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const hideForm= () => {
         setEmail("")

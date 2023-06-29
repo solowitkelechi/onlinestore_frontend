@@ -40,7 +40,8 @@ export default function Category(){
         results: []
     })
     const [page, setPage] = useState(1)
-    const url = `https://solowitkelechi.pythonanywhere.com/productbycategory/${slug}/`
+    
+    const url = `https://onlinestore-backend.vercel.app/productbycategory/${slug}/`
     const classes = useStyles()
 
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {

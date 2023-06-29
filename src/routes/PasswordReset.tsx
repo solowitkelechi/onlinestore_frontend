@@ -40,7 +40,7 @@ const PasswordReset = () => {
         key: '',
         user: 0,
     })
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const classes = useStyles()
 

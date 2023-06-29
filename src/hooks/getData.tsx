@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import axios from 'axios'
 
 export function useUser(id:any){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
     const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/api/users/${id}/`, fetcher)
@@ -14,7 +14,7 @@ export function useUser(id:any){
 }
 
 export function useAllProducts(){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
     const {data, error, isLoading} = useSWR(`${url}/api/products/`, fetcher)
@@ -27,7 +27,7 @@ export function useAllProducts(){
 }
 
 export function useRandomProducts(){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
     const {data, error, isLoading} = useSWR(`${url}/randomproducts/`, fetcher)
@@ -40,7 +40,7 @@ export function useRandomProducts(){
 }
 
 export function useAllOrder(){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
     const {data, error, isLoading} = useSWR(`${url}/api/orderhistory/`, fetcher)
@@ -53,7 +53,7 @@ export function useAllOrder(){
 }
 
 export function useProduct(id:any){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
@@ -66,7 +66,7 @@ export function useProduct(id:any){
 }
 
 export function useProductsForPrice(){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
@@ -79,7 +79,8 @@ export function useProductsForPrice(){
 }
 
 export function useProductCategory(category:any){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
+
     const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
     const {data, error, isLoading} = useSWR(`${url}/productbycategory/${category}/`, fetcher)
@@ -91,7 +92,7 @@ export function useProductCategory(category:any){
 }
 
 export function useImage(id:any){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const fetcher = (url: string) => axios.get(url).then(response => response.data)
     const {data, error, isLoading} = useSWR(`${url}/image/${id}/`, fetcher)
@@ -103,7 +104,7 @@ export function useImage(id:any){
 }
 
 export function useProductDetail(id:any){
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
     const fetcher = (url: string) => axios.get(url).then(response => response.data)
     const {data, error, isLoading} = useSWR(`${url}/productdetail/get/${id}/`, fetcher)
     return {

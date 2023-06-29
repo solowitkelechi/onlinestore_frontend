@@ -11,7 +11,7 @@ import axios from 'axios'
 export const useSmartContract = () => {
     // check {chainId}
 
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const chainIdMap: any = {
         "11155111": "sepolia",

@@ -58,7 +58,7 @@ export default function AccountOverview(){
         setValue(newValue)
     }
 
-    const url = "https://solowitkelechi.pythonanywhere.com"
+    const url = "https://onlinestore-backend.vercel.app"
 
     const {allProducts, isLoading, isError} = useAllProducts()
     const {allOrder, isLoadingOrder, isErrorOrder} = useAllOrder()
