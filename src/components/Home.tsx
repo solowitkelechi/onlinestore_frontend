@@ -31,7 +31,7 @@ function Main (){
             <section className="section__center">
                 {
                     productCategories.map((item: any) => (
-                    <NavLink to={`/products/${item.name}`} key={item.name} style={{display: 'contents'}}>
+                    <NavLink to={`/products/${item.name}`} key={item.name} style={{display: 'contents', textDecoration: 'none'}}>
                         <div>
                             <img src={item.image} alt={item.name}  />
                             <p>{item.name}</p>

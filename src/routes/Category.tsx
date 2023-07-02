@@ -9,15 +9,20 @@ import axios from 'axios'
 const useStyles = makeStyles(() => ({
     categoryContainer:{
         display: 'flex',
-        flexFlow: 'column'
+        flexDirection: 'column'
     },
 
     itemsContainer: {
         display: 'flex',
         flexFlow: 'row wrap',
+        flexBasis: '90%',
+        justifyContent: 'center',
+        overflowY: 'auto',
         gap: '1em',
         margin: '1em',
-        flexGrow: '2',
+    },
+    pagination:{
+        flexBasis: '10%',
     }
 }))
 
@@ -72,8 +77,10 @@ export default function Category(){
             </div>
             {
                 items?.count > 0 &&
-                <Pagination count={items.count > 20 ? items.count / 20 : 1} page={page} onChange={handleChange} />
-                }
+                <div className={classes.pagination}>
+                    <Pagination count={items.count > 20 ? items.count / 20 : 1} page={page} onChange={handleChange} />
+                </div>
+            }
         </div>
         
     )
