@@ -34,7 +34,7 @@ function Main (){
                         <NavLink to={`/products/${item.name}`} key={item.name} style={{display: 'contents'}}>
                             <div>
                                 <img src={item.image} alt={item.name} />
-                                <p style={{textDecoration: 'none'}}>{item.name}</p>
+                                <p>{item.name}</p>
                             </div>
                         </NavLink>
                         )

@@ -118,8 +118,8 @@ function ProductContent(){
                     <b>{product?.name}</b>
                     <b>${product?.price}</b>
                     <p>{product?.description}</p>
-                    <p style={{opacity: '.7'}}>in stock: <b>{product?.quantity}</b></p>
-                    <span>seller: {user?.username}</span>
+                    <p style={{opacity: '.6'}}>in stock: {product?.quantity}</p>
+                    <span style={{opacity: '.6'}}>seller: {user?.username}</span>
                 </section>
             }
             <section className="item cart">

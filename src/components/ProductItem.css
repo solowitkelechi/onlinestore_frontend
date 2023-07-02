@@ -19,6 +19,10 @@ img{
     padding: .5em;
 }
 
+.non-scrollable-container{
+    justify-content: start;
+}
+
 .product-container:hover{
     display: flex;
     flex-flow: column;
@@ -53,7 +57,7 @@ img{
     .product-container-width, .non-scrollable-container-width{
         width: max(40%, var(--MOBILE-DEVICE-WIDTH));
     }
-    .product-container, .non-scrollable-container{
+    .non-scrollable-container{
         justify-content: space-around;
     }
 }

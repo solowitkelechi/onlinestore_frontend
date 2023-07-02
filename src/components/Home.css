@@ -184,6 +184,7 @@ img{
 
 .section__center div p{
     padding: .5em;
+    text-decoration: none;
 }
 
 .section__center div img{

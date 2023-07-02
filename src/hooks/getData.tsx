@@ -5,7 +5,7 @@ export function useUser(id:any){
     const url = "https://onlinestore-backend.vercel.app"
 
     const fetcher = (url: string) => axios.get(url).then(res => res.data)
-    const {data, error, isLoading} = useSWR(`http://127.0.0.1:8000/api/users/${id}/`, fetcher)
+    const {data, error, isLoading} = useSWR(`${url}/api/users/${id}/`, fetcher)
     return {
         user: data,
         isLoading,

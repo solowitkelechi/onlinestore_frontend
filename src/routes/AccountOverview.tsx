@@ -1,5 +1,6 @@
 import './AccountOverview.css'
-import React, {useState, useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
+import {useEthers} from '@usedapp/core'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
@@ -53,6 +54,8 @@ const categories = ProductCategories()
 export default function AccountOverview(){
     const [,,, token,] = useOutletContext() as any
     const [value, setValue] = useState("1")
+    const {account} = useEthers()
+    const [walletConnectionError, setWalletConnectionError) = useState<boolean>(false)
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue)
@@ -97,7 +100,7 @@ export default function AccountOverview(){
                 seller_name: token.id,
                 name: productData.productname,
                 category: productData.category,
-                brand: productData.brand,
+                brand: productData.model,
                 description: productData.description,
                 price: productData.price,
                 quantity: productData.quantity,
@@ -218,7 +221,6 @@ export default function AccountOverview(){
     const [productData, setProductData] = useState({
         category: '',
         productname: '',
-        brand: '',
         model: '',
         description: '',
         price: 0,
@@ -334,6 +336,13 @@ export default function AccountOverview(){
     //},[checkSaleBalance, token.eth_address])
 
     const handleCheckBalance = () => {
+        if (account === undefined){
+            setWalletConnectionError(true)
+            setTimeout(() => {
+                setWalletConnectionError(false)
+            }, 5000)
+            return
+        }
         checkBalanceInContract()
     }
 
@@ -346,9 +355,11 @@ export default function AccountOverview(){
         <section style={{display: 'flex', justifyContent: 'flex-start', gap: '.5em', padding: '.5em'}}>
             <b>Email: {token.email}</b> 
         </section>
-        <section style={{display: 'flex', justifyContent: 'space-around', gap: '.5em', padding: '.5em'}}>
+        <section style={{display: 'flex', justifyContent: 'space-around', gap: '1em', padding: '.5em'}}>
             <b>Sales: {salesBalance !== "" ? salesBalance : "0"}</b>
             <Button onClick={handleCheckBalance}>check</Button>
+        </section>
+        <section>
             <Button onClick={handleWithdraw} disabled={isMiningWithdrawal} variant="contained">
                 {
                     isMiningWithdrawal ? <CircularProgress/> : "withdraw"
@@ -404,7 +415,6 @@ export default function AccountOverview(){
                         }
                     </div>
                     <TextField label='product name' onChange={handleInputChange} name="productname" required variant='standard'/>
-                    <TextField label='product brand' name="brand" onChange={handleInputChange} required variant='standard'/>
                     <TextField label='product model' name="model" onChange={handleInputChange} required variant='standard'/>
                     <TextField label="description" name="description" onChange={handleInputChange} required multiline rows={5}/>
                     <TextField label="price" name="price" required onChange={handleInputChange} inputProps={{inputMode: 'numeric', pattern: '[0-9]*'}}  variant='standard'/>
