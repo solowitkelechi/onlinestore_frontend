@@ -185,6 +185,7 @@ img{
 .section__center div p{
     padding: .5em;
     text-decoration: none;
+    color: #333;
 }
 
 .section__center div img{

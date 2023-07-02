@@ -351,46 +351,51 @@ export default function AccountOverview(){
     }
 
     return (
-        <Container maxWidth="md" className='modal-container'>
+        <Container maxWidth="md" style={{display: 'flex', flexDirection:'column', gap:'1em'}}>
         <section style={{display: 'flex', justifyContent: 'flex-start', gap: '.5em', padding: '.5em'}}>
             <b>Email: {token.email}</b> 
         </section>
-        <section style={{display: 'flex', justifyContent: 'space-around', gap: '1em', padding: '.5em'}}>
-            <b>Sales: {salesBalance !== "" ? salesBalance : "0"}</b>
-            <Button onClick={handleCheckBalance}>check</Button>
+        <section style={{display: 'flex', justifyContent: 'start', padding: '.5em'}}>
+            <p
+                style={{display: 'flex', placeContent: 'center center'}}
+            >
+                <Button variant="contained" onClick={handleCheckBalance}>Check Sales Made:</Button>
+                {salesBalance !== "" ? salesBalance : "0"}
+            </p>
+            {walletConnectionError && <Alert severity="info">please connect your wallet!</Alert>}
         </section>
-        {walletConnectionError && <Alert severity="info">please connect your wallet!</Alert>}
-        <section>
+        <section style={{display: 'flex', justifyContent: 'flex-start', gap: '.5em', padding: '.5em'}}>
             <Button onClick={handleWithdraw} disabled={isMiningWithdrawal} variant="contained">
                 {
                     isMiningWithdrawal ? <CircularProgress/> : "withdraw"
                 }
             </Button>
+            {
+                withdrawalSuccess && <Alert severity="success">contract sales withdrawal successful.</Alert>
+            }
+            {
+                withdrawalFailed && <Alert severity="error">withdrawal failed, try again.</Alert>
+            }
         </section>
-        {
-            withdrawalSuccess && <Alert severity="success">contract sales withdrawal successful.</Alert>
-        }
-        {
-            withdrawalFailed && <Alert severity="error">withdrawal failed, try again.</Alert>
-        }
         <section className={classes.addressSection}>
             <TextField className={classes.addressInput} onChange={(e) => setEthAddress(e.target.value)} required value={ethAddress} label="Eth address" />
             <Button variant="contained" disabled={updatingEthAddress ? updatingEthAddress : false} onClick={handleEthAddressUpdate}>
                 {updatingEthAddress ? <CircularProgress size={26} /> : "update"}
             </Button>
+            {
+                ethAddressInputError && <Alert severity='warning'>check the ETH address.</Alert>
+            }
+            {
+                updateEthAddressAlert && <Alert severity="success">ETH address updated successfully!</Alert>
+            }
+            {
+                reloginAlert && <Alert severity="info">Please re-login again for address to take effect!</Alert>
+            }
+            {
+                updateEthAddressError && <Alert severity="error">ETH address update failed! Retry</Alert>
+            }
         </section>
-        {
-            ethAddressInputError && <Alert severity='warning'>check the ETH address.</Alert>
-        }
-        {
-            updateEthAddressAlert && <Alert severity="success">ETH address updated successfully!</Alert>
-        }
-        {
-            reloginAlert && <Alert severity="info">Please re-login again for address to take effect!</Alert>
-        }
-        {
-            updateEthAddressError && <Alert severity="error">ETH address update failed! Retry</Alert>
-        }
+        
         <Button variant='contained' onClick={handleOpen} style={{margin:'1em'}} color='primary'>Add a product</Button>
         <Modal
             open={open}
