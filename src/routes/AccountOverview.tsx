@@ -55,7 +55,7 @@ export default function AccountOverview(){
     const [,,, token,] = useOutletContext() as any
     const [value, setValue] = useState("1")
     const {account} = useEthers()
-    const [walletConnectionError, setWalletConnectionError) = useState<boolean>(false)
+    const [walletConnectionError, setWalletConnectionError] = useState<boolean>(false)
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue)
@@ -359,6 +359,7 @@ export default function AccountOverview(){
             <b>Sales: {salesBalance !== "" ? salesBalance : "0"}</b>
             <Button onClick={handleCheckBalance}>check</Button>
         </section>
+        {walletConnectionError && <Alert severity="info">please connect your wallet!</Alert>}
         <section>
             <Button onClick={handleWithdraw} disabled={isMiningWithdrawal} variant="contained">
                 {
