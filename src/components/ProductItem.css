@@ -11,12 +11,13 @@ img{
     height: 100%;
 }
 
-.product-container{
+.product-container, .non-scrollable-container{
     display: flex;
     flex-flow: column;
     justify-content: center;
     box-shadow: 0px 0px 2px 1px rgba(51, 51, 51, 0.1);
     transition: all .5s ease-in-out;
+    padding: .5em;
 }
 
 .product-container:hover{
@@ -26,13 +27,18 @@ img{
     transform: Scale(1.1);
 }
 
-.product-container a{
+.product-container a, .non-scrollable-container a{
     display: contents;
     text-decoration: none;
     color: #333;
 }
 
 .product-container:active, .product-container:focus {
+    text-decoration: none;
+    color: #333;
+}
+
+.non-scrollable-container:active, .non-scrollable-container:focus{
     text-decoration: none;
     color: #333;
 }
@@ -45,25 +51,25 @@ img{
 
 
 @media screen and (max-width: 550px) {
-    .product-container-width{
+    .product-container-width, .non-scrollable-container-width{
         width: max(40%, var(--MOBILE-DEVICE-WIDTH));
     }
 }
 
 @media screen and (min-width: 550px) and (max-width: 768px) {
-    .product-container-width{
+    .product-container-width, .non-scrollable-container-width{
         width: max(var(--MEDIUM-DEVICE-WIDTH, 30%));
     }
 }
 
 @media screen and (min-width: 768px) {
-    .product-container-width{
+    .product-container-width, .non-scrollable-container-width{
         width: min(20%,var(--LARGE-SCREEN-WIDTH));
     }
 }
 
 
-.product-container img{
+.product-container img, .non-scrollable-container img{
     height: auto;
     flex-grow: 2;
 }

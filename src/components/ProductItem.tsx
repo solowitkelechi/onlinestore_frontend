@@ -8,11 +8,10 @@ import Button from '@mui/material/Button'
 function ProductItem(props: any){
     const {productImage} = useImage(props.item.id)
     const [cartToken, setCartToken, removeCartToken]:any = useOutletContext()
-
-    const tokenIndexInCart = useMemo(() => cartToken.findIndex((item:any)=> item.id === props.item.id), [cartToken, props.item.id])
-
     const [itemAdded, setItemAdded] = useState<boolean>(false)
     const [itemInCart, setItemInCart] = useState<boolean>(false)
+
+    const tokenIndexInCart = useMemo(() => cartToken.findIndex((item:any)=> item.id === props.item.id), [cartToken, props.item])
 
     const addToCart = () => {
         setItemAdded(true)
@@ -41,10 +40,10 @@ function ProductItem(props: any){
             id: props.item.id,
             quantity: 1,
         })
-    }, [itemAdded, props.item.id])
+    }, [itemAdded])
 
     return (
-        <div className={props.scrollable === true ? 'product-container scrollable product-container-width' : 'product-container product-container-width'}>
+        <div className={props.scrollable === true ? 'product-container scrollable product-container-width' : '.non-scrollable-container .non-scrollable-container-width'}>
             <a href={`/product/${props.item.id}`}>
                 <img src={productImage?.image_url} alt="" width="3861px" height="3861px" />
                 <section className='product-details'>
