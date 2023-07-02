@@ -385,11 +385,13 @@ export default function AccountOverview(){
                 withdrawalFailed && <Alert severity="error">withdrawal failed, try again.</Alert>
             }
         </section>
-        <section className={classes.addressSection}>
-            <TextField className={classes.addressInput} onChange={(e) => setEthAddress(e.target.value)} required value={ethAddress} label="Eth address" />
-            <Button variant="contained" disabled={updatingEthAddress ? updatingEthAddress : false} onClick={handleEthAddressUpdate}>
-                {updatingEthAddress ? <CircularProgress size={26} /> : "update"}
-            </Button>
+        <section style={{display: 'flex', flexDirection: 'column', gap: '.5em', padding: '.5em'}}>
+            <section className={classes.addressSection}>
+                <TextField className={classes.addressInput} onChange={(e) => setEthAddress(e.target.value)} required value={ethAddress} label="Eth address" />
+                <Button variant="contained" disabled={updatingEthAddress ? updatingEthAddress : false} onClick={handleEthAddressUpdate}>
+                    {updatingEthAddress ? <CircularProgress size={26} /> : "update"}
+                </Button>
+            </section>
             {
                 ethAddressInputError && <Alert severity='warning'>check the ETH address.</Alert>
             }
