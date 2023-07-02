@@ -32,9 +32,9 @@ function Main (){
                 {
                     productCategories.map((item: any) => (
                         <NavLink to={`/products/${item.name}`} key={item.name} style={{display: 'contents'}}>
-                            <div style={{textDecoration: 'none'}}>
+                            <div>
                                 <img src={item.image} alt={item.name} />
-                                <p>{item.name}</p>
+                                <p style={{textDecoration: 'none'}}>{item.name}</p>
                             </div>
                         </NavLink>
                         )

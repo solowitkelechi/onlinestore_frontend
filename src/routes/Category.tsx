@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom'
+import {useParams, useOutletContext} from 'react-router-dom'
 import ProductItem from '../components/ProductItem'
 import {makeStyles} from '@mui/styles'
 import React, {useState, useEffect, useCallback} from 'react'
@@ -28,6 +28,8 @@ const useStyles = makeStyles(() => ({
 
 export default function Category(){
     const {slug} = useParams()
+
+    const [cartToken, setCartToken, removeCartToken]:any = useOutletContext()
 
     type itemsType ={
         count: number,
@@ -72,7 +74,7 @@ export default function Category(){
                 {
                     isLoadingProducts ? <CircularProgress size={26} /> :
                     items.results?.length > 0 &&
-                    items?.results?.map((item: any) => <ProductItem key={item.id} item={item} />)
+                    items?.results?.map((item: any) => <ProductItem key={item.id} item={item} cartToken={cartToken} setCartToken={setCartToken} removeCartToken={removeCartToken} />)
                 }
             </div>
             {

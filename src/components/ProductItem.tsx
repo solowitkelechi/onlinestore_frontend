@@ -7,11 +7,10 @@ import Button from '@mui/material/Button'
 
 function ProductItem(props: any){
     const {productImage} = useImage(props.item.id)
-    const [cartToken, setCartToken, removeCartToken]:any = useOutletContext()
     const [itemAdded, setItemAdded] = useState<boolean>(false)
     const [itemInCart, setItemInCart] = useState<boolean>(false)
 
-    const tokenIndexInCart = useMemo(() => cartToken.findIndex((item:any)=> item.id === props.item.id), [cartToken, props.item])
+    const tokenIndexInCart = useMemo(() => props.cartToken.findIndex((item:any)=> item.id === props.item.id), [props.cartToken, props.item])
 
     const addToCart = () => {
         setItemAdded(true)
@@ -22,25 +21,29 @@ function ProductItem(props: any){
     }
 
     const checkItemInCart = useCallback(() => {
-        if (cartToken.length > 0){
+        if (props.cartToken.length > 0){
             const tokenIndex = tokenIndexInCart
             if (tokenIndex >= 0){
                 setItemInCart(true)
             }
         }
-    }, [cartToken, props.item, tokenIndexInCart])
+    }, [props.cartToken, props.item, tokenIndexInCart])
 
     useEffect(() => {
         checkItemInCart()
     }, [checkItemInCart])
 
     useEffect(() => {
-        !itemAdded && removeCartToken(props.item.id)
-        itemAdded && setCartToken({
+        !itemAdded && props.removeCartToken(props.item.id)
+        itemAdded && props.setCartToken({
             id: props.item.id,
             quantity: 1,
         })
     }, [itemAdded])
+
+    useEffect(() => {
+        itemInCart && setItemAdded(true)
+    }, [itemInCart])
 
     return (
         <div className={props.scrollable === true ? 'product-container scrollable product-container-width' : 'non-scrollable-container non-scrollable-container-width'}>
@@ -55,10 +58,10 @@ function ProductItem(props: any){
             <Button 
                 variant="contained"
                 size="small"
-                onClick={itemAdded || itemInCart ? removeFromCart : addToCart}
-                color={itemAdded || itemInCart ? 'warning' : 'primary'}
+                onClick={itemAdded ? removeFromCart : addToCart}
+                color={itemAdded ? 'warning' : 'primary'}
             >
-                {itemAdded || itemInCart ? "remove" : "add to cart"}
+                {itemAdded ? "remove" : "add to cart"}
             </Button>
         </div>
     )
