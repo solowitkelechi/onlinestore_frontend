@@ -86,13 +86,14 @@ function ProductContent(){
         })
     },[itemAdded])
 
-    
-
     useEffect(()=>{
         setItemCount(loadedCount)
         loadedCount > 0 && setItemAdded(true)
     },[loadedCount])
 
+    // if there is increment or decrement, it updates the product quantity in cart
+    // if and only if it has been added to the cart
+    // else you can't increase or decrease the quantity.
     useEffect(()=>{
         if (itemAdded){
             setCartToken({id: product?.id, quantity: itemCount})

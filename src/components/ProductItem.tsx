@@ -29,7 +29,7 @@ function ProductItem(props: any){
                 setItemInCart(true)
             }
         }
-    }, [cartToken, tokenIndexInCart])
+    }, [cartToken, props.item, tokenIndexInCart])
 
     useEffect(() => {
         checkItemInCart()
@@ -41,7 +41,7 @@ function ProductItem(props: any){
             id: props.item.id,
             quantity: 1,
         })
-    }, [itemAdded, props.item.id, removeCartToken, setCartToken])
+    }, [itemAdded, props.item.id])
 
     return (
         <div className={props.scrollable === true ? 'product-container scrollable product-container-width' : 'product-container product-container-width'}>
@@ -51,16 +51,16 @@ function ProductItem(props: any){
                     <span>{props.item.name}</span>
                     <span>{props.item.brand}</span>
                     <b>${props.item.price}</b>
-                    <Button 
-                        variant="contained"
-                        onClick={itemAdded || itemInCart ? removeFromCart : addToCart}
-                        color={itemAdded || itemInCart ? 'warning' : 'primary'}
-                    >
-                        {itemAdded ? "remove" : "add to cart"}
-                    </Button>
                 </section>
             </a>
-            
+            <Button 
+                variant="contained"
+                size="small"
+                onClick={itemAdded || itemInCart ? removeFromCart : addToCart}
+                color={itemAdded || itemInCart ? 'warning' : 'primary'}
+            >
+                {itemAdded || itemInCart ? "remove" : "add to cart"}
+            </Button>
         </div>
     )
 }

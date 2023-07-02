@@ -31,13 +31,13 @@ function Main (){
             <section className="section__center">
                 {
                     productCategories.map((item: any) => (
-                    <NavLink to={`/products/${item.name}`} key={item.name} style={{display: 'contents', textDecoration: 'none'}}>
-                        <div>
-                            <img src={item.image} alt={item.name}  />
-                            <p>{item.name}</p>
-                        </div>
-                    </NavLink>
-                    )
+                        <NavLink to={`/products/${item.name}`} key={item.name} style={{display: 'contents'}}>
+                            <div style={{textDecoration: 'none'}}>
+                                <img src={item.image} alt={item.name} />
+                                <p>{item.name}</p>
+                            </div>
+                        </NavLink>
+                        )
                     )
                 }
             </section>
