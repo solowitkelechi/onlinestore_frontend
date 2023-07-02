@@ -347,24 +347,32 @@ export default function AccountOverview(){
     }
 
     const handleWithdraw = () => {
+        if (account === undefined){
+            setWalletConnectionError(true)
+            setTimeout(() => {
+                setWalletConnectionError(false)
+            }, 5000)
+            return
+        }
         withdrawFundInContract()
     }
 
     return (
-        <Container maxWidth="md" style={{display: 'flex', flexDirection:'column', gap:'1em'}}>
+        <Container maxWidth="md" style={{display: 'flex', flexDirection:'column', gap:'.7em'}}>
         <section style={{display: 'flex', justifyContent: 'flex-start', gap: '.5em', padding: '.5em'}}>
             <b>Email: {token.email}</b> 
         </section>
-        <section style={{display: 'flex', justifyContent: 'start', padding: '.5em'}}>
+        <section style={{display: 'flex', flexDirection: 'column', gap: '.5em', padding: '.5em'}}>
             <p
                 style={{display: 'flex', placeContent: 'center center'}}
             >
-                <Button variant="contained" onClick={handleCheckBalance}>Check Sales Made:</Button>
-                {salesBalance !== "" ? salesBalance : "0"}
+                <Button variant="contained" onClick={handleCheckBalance}>
+                    Sales Made: {salesBalance !== "" ? salesBalance : "0"}
+                </Button>  
             </p>
             {walletConnectionError && <Alert severity="info">please connect your wallet!</Alert>}
         </section>
-        <section style={{display: 'flex', justifyContent: 'flex-start', gap: '.5em', padding: '.5em'}}>
+        <section style={{display: 'flex', flexDirection: 'column', gap: '.5em', padding: '.5em'}}>
             <Button onClick={handleWithdraw} disabled={isMiningWithdrawal} variant="contained">
                 {
                     isMiningWithdrawal ? <CircularProgress/> : "withdraw"
