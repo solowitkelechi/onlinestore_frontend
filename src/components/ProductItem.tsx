@@ -43,7 +43,7 @@ function ProductItem(props: any){
     }, [itemAdded])
 
     return (
-        <div className={props.scrollable === true ? 'product-container scrollable product-container-width' : '.non-scrollable-container .non-scrollable-container-width'}>
+        <div className={props.scrollable === true ? 'product-container scrollable product-container-width' : 'non-scrollable-container non-scrollable-container-width'}>
             <a href={`/product/${props.item.id}`}>
                 <img src={productImage?.image_url} alt="" width="3861px" height="3861px" />
                 <section className='product-details'>
