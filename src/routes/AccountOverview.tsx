@@ -87,7 +87,7 @@ export default function AccountOverview(){
         // also to be used to delete the product if
         // other api calls failed so it won't be saved in the DB.
         let pId:Number
-        if (!token.eth_address){
+        if (!token.eth_address || token.eth_address.length < 42){
             setEthAddressError(true)
             setTimeout(()=>{
                 setEthAddressError(false)
