@@ -1,11 +1,11 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
+import {useParams, useOutletContext} from 'react-router-dom'
 import {makeStyles} from '@mui/styles'
 import './ProductContent.css'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Button from '@mui/material/Button'
 import Alert from '@mui/material/Alert'
 import ProductItem from '../components/ProductItem';
-import {useParams, useOutletContext} from 'react-router-dom'
 import {useProduct,useRandomProducts, useImage, useUser} from '../hooks/getData'
 import { RemoveShoppingCart } from '@mui/icons-material';
 import CircularProgress from '@mui/material/CircularProgress'
@@ -28,6 +28,8 @@ function ProductContent(){
     const [cartToken, setCartToken, removeCartToken]:any = useOutletContext()
     const {slug} = useParams()
     const {product, isError, isLoading} = useProduct(slug)
+    console.log(slug, product)
+
     const {user} = useUser(product?.seller_name)
     const {productImage} = useImage(product?.id)
 
@@ -138,7 +140,16 @@ function ProductContent(){
         <div className={classes.btmContainer}>
             {   isLoadingRandom ? <CircularProgress size={26}/> :
                 randomProducts?.length > 0 &&
-                randomProducts.map((item:any) => (<ProductItem key={item.id} item={item} scrollable={true}/>))
+                randomProducts.map((item:any) => (
+                    <ProductItem 
+                        key={item.id} 
+                        item={item} 
+                        cartToken={cartToken} 
+                        setCartToken={setCartToken}
+                        removeCartToken={removeCartToken} 
+                        scrollable={true}
+                    />
+                ))
             }
         </div>
         </>
