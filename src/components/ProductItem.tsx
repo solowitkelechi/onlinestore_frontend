@@ -9,7 +9,7 @@ function ProductItem(props: any){
     const {productImage} = useImage(props.item.id)
     const [itemAdded, setItemAdded] = useState<boolean>(false)
     const [itemInCart, setItemInCart] = useState<boolean>(false)
-
+    
     const tokenIndexInCart = useMemo(() => props.cartToken.findIndex((item:any) => item.id === props.item.id), [props.cartToken, props.item])
 
     const addToCart = () => {

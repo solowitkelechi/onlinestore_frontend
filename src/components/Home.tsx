@@ -1,3 +1,4 @@
+import {useOutletContext} from 'react-router-dom'
 import './Home.css'
 import coverimage from '../images/shopping-cover.jpg'
 import delivery from '../images/delivery.jpg'
@@ -9,6 +10,7 @@ import {NavLink} from 'react-router-dom'
 
 function Main (){
     const productCategories = ProductCategories()
+    const [cartToken, setCartToken, removeCartToken]:any = useOutletContext()
 
     return (
         <div className="main">
@@ -42,7 +44,11 @@ function Main (){
                 }
             </section>
             <h2>products you may like</h2>
-            <Products/>
+            <Products 
+                cartToken={cartToken} 
+                setCartToken={setCartToken} 
+                removeCartToken={removeCartToken} 
+            />
         </div>
     )
 }
