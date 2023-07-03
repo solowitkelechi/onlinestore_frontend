@@ -154,7 +154,7 @@ export default function Account(){
         e.preventDefault()
         setIsRecovering(true)
         const keyString = randomKey()
-        const userdata = await axios.post(url + '/checkemail/', {'email': recoveryEmail})
+        const userdata = await axios.post(`${url}/checkemail/`, {'email': recoveryEmail})
             .then((response) => {
                 if (response.data.status === "success"){
                     return response.data.data.id
@@ -191,7 +191,7 @@ export default function Account(){
             setIsRecovering(false)
         })
         if (recoveryData){
-            axios.post(url + '/sendemail/',
+            axios.post(`${url}/sendemail/`,
             {
                 subject: 'BuyNow password reset',
                 text_content: 'Password reset: very important',
@@ -236,7 +236,7 @@ export default function Account(){
                     </html>
                 `
             },{
-                timeout: 10000,
+                timeout: 15000,
             })
             .then((response) => {
                 if (response.status){
@@ -297,15 +297,8 @@ export default function Account(){
                             isLoggingIn ? <CircularProgress size={26}/> : "Log in"
                         }
                     </Button>
-                    <section className="social">
-                        <h4>Login using social account</h4>
-                        <div className="icon">
-                            <GoogleIcon/>
-                            <AppleIcon/>
-                        </div>
-                    </section>
                     <section>
-                    <Button onClick={hideForm} variant='outlined'>Sign up</Button>
+                        <Button onClick={hideForm} variant='outlined'>Sign up</Button>
                     </section>
                 </form>
                 <Button size="small" onClick={()=> setShowPasswordRecovery(!showPasswordRecovery)}>
@@ -327,7 +320,7 @@ export default function Account(){
                             variant="contained"
                             disabled={isRecovering ? true : false}
                         >
-                            {isRecovering ? <CircularProgress size={26}/> : "Recover password"}
+                            {isRecovering ? <CircularProgress size={24}/> : "Recover password"}
                         </Button>
                         {
                             requestTimeoutError && <Alert severity='error'>request timeout, try again.</Alert>
@@ -353,16 +346,9 @@ export default function Account(){
                     <TextField label="confirm password" inputProps={{minLength: 8, maxLength: 20,}} name="confirm-password" type="password" onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword}/>
                     <Button type="submit" variant="contained" disabled={isSigningUp ? true : false}>
                         {
-                            isSigningUp ? <CircularProgress size={26}/> : "Sign up"
+                            isSigningUp ? <CircularProgress size={24}/> : "Sign up"
                         }
                     </Button>
-                    <section className="social">
-                        <h4>Sign up using social account</h4>
-                        <div className="icon">
-                            <GoogleIcon/>
-                            <AppleIcon/>
-                        </div>
-                    </section>
                     <section>
                         <Button onClick={showForm} variant='outlined'>Log in</Button>
                     </section>
